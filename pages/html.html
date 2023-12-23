@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de message</title>
+</head>
+
+<body>
+
+    <form action="/messages" method="POST" enctype="application/x-www-form-urlencoded">
+        <label for="sender">Sender :</label>
+        <input type="text" id="sender" name="sender" required value="Touki">
+
+        <label for="content">Content :</label>
+        <textarea id="content" name="content" rows="4" required></textarea>
+
+        <input type="submit" value="Envoyer">
+    </form>
+    <button onclick="updateMessage('messageId')">Mise a jour des messages</button>
+    <button onclick="deleteMessage('messageId')">Supprimer des messages</button>
+    <script>
+        let messageUpdateValue = document.querySelector('#content').textContent
+        messageUpdateValue = 'message par defaut';
+        function updateMessage(messageId) {
+            messageUpdateValue = document.querySelector('#content').textContent
+            fetch(`/messages/${messageId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+                , body: JSON.stringify({
+                    messageUpdateValue
+                }),
+            })
+                .then(response => response.json()).then(data => console.log(data)).catch(err => console.log('erreur : ', err));
+        }
+        function deleteMessage(messageId) {
+            fetch(`/messages/${messageId}`, { method: 'DELETE', })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Erreur :', error))
+        }
+    </script>
+</body>
+
+</html>
