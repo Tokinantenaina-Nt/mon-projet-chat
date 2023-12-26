@@ -10,9 +10,9 @@ router.get('/', (req, res) => {
     res.send('Bienvenue sur l app')
 })
 
-router.get('/messages', async (req, res) => {
+router.get('/all', async (req, res) => {
     try {
-        const snapshot = await Message.get();
+        const snapshot = await Message.orderBy('timestamp', 'desc').get();
         const messages = [];
         snapshot.forEach((doc) => {
             messages.push({ id: doc.id, ...doc.data() });
@@ -23,7 +23,7 @@ router.get('/messages', async (req, res) => {
     }
 });
 
-router.post('/messages', async (req, res) => {
+router.post('/add', async (req, res) => {
     const { sender, content } = req.body;
     try {
         const newMessage = await Message.add({
@@ -41,7 +41,7 @@ router.get('/send', (req, res) => {
     res.sendFile(pathSendMess)
 });
 
-router.get('/messages/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const { id } = req.params
         const messageRef = messagesCollection.doc(id);
@@ -57,7 +57,7 @@ router.get('/messages/:id', async (req, res) => {
     }
 });
 
-router.put('/messages/:id', async (req, res) => {
+router.put('/maj/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const { sender, content } = req.body;
@@ -73,7 +73,7 @@ router.put('/messages/:id', async (req, res) => {
 
             res.json({ message: 'Message mis à jour avec succès', data: updatedMessageData });
         } else {
-            // Si le document n'existe pas après la mise à jour
+
             res.status(404).json({ message: 'Message non trouvé après la mise à jour' });
         }
     } catch (err) {
@@ -81,7 +81,7 @@ router.put('/messages/:id', async (req, res) => {
     }
 });
 
-router.delete('/messages/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     try {
         const { id } = req.params;
 

@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-app.use(('/'), messageRouter);
+app.use(('/messages'), messageRouter);
 
 app.listen(PORT, () => {
     console.log('connected to port : ' + PORT);
