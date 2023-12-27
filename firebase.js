@@ -1,10 +1,13 @@
+require('dotenv').config()
 const admin = require('firebase-admin')
 
-const serviceAccount = require("./mon-projet-de-m-chat-firebase-adminsdk-e1exj-ff5f9c2dcb.json");
+const serviceAccount = require(`${process.env.SERVICE_ACCOUNT_KEY}`);//('./path/to/your/serviceAccountKey.json')
+
+
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: `https://(default).firebaseio.com/`,
+    databaseURL: `'https://'${process.env.FIREBASE_DB}'.firebaseio.com/'`,
 });
 
 const db = admin.firestore();

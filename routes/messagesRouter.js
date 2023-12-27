@@ -6,6 +6,7 @@ const Message = db.collection('messages');
 const messagesCollection = admin.firestore().collection('messages');
 const path = require('path')
 const pathSendMess = path.join(__dirname, '../pages/html.html')
+
 router.get('/', (req, res) => {
     res.send('Bienvenue sur l app')
 })
@@ -22,6 +23,7 @@ router.get('/all', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
 
 router.post('/add', async (req, res) => {
     const { sender, content } = req.body;
