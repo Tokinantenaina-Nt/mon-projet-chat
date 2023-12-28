@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de message</title>
+</head>
+
+<body>
+    <div id="sender" style="background-color: black; color: white;"></div>
+    <div id="content"></div>
+    <div style="color: red;">
+        <form action="" method="post">
+            <input type="text" id="messageId">
+            <button type="submit"></button>
+        </form>
+    </div>
+
+
+    <button onclick="updateMessage('messageId')">Mise a jour des messages</button>
+    <button onclick="deleteMessage('messageId')">Supprimer des messages</button>
+    <script>
+
+        let sender = document.querySelector('#sender').textContent, messageId = document.querySelector('#messageId').textContent
+        fetch(`http://localhost:3000/messages/${messageId}`).then(res => res.json()).then(data => console.log(data)).catch(err => console.err(err))
+
+        function updateMessage(messageId) {
+            messageUpdateValue = document.querySelector('#content').textContent
+            fetch(`/messages/${messageId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+                , body: JSON.stringify({
+                    messageUpdateValue
+                }),
+            }).then(response => response.json()).then(data => console.log(data)).catch(err => console.log('erreur : ', err));
+        }
+
+    </script>
+</body>
+
+</html>
