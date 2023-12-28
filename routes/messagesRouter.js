@@ -1,11 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const admin = require('firebase-admin')
-<<<<<<< HEAD
 const db = require('../db');
-=======
-const db = require('../firebase');
->>>>>>> a59d07035894df6e891660414d9a0937994a7735
 const Message = db.collection('messages');
 const messagesCollection = admin.firestore().collection('messages');
 const path = require('path')
